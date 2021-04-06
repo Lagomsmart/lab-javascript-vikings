@@ -45,8 +45,10 @@ class Saxon extends Soldier {
 
 // War
 class War {
-    vikingArmy = [];
-    saxonArmy = [];
+    constructor() {
+        this.vikingArmy = [];
+        this.saxonArmy = [];
+    }
 
     addViking = (Viking) => {
         this.vikingArmy.push(Viking)
@@ -60,35 +62,30 @@ class War {
         let viking = this.vikingArmy[Math.floor(Math.random() * this.vikingArmy.length)]
         let saxon = this.saxonArmy[Math.floor(Math.random() * this.saxonArmy.length)]
 
-        saxon.receiveDamage(viking.strength)
+        let msg = saxon.receiveDamage(viking.attack())
 
         if (saxon.health < 1) {
             this.saxonArmy.splice(this.saxonArmy.indexOf(saxon), 1)
         }
-        return this.saxon.health - this.viking.strength;
+        return msg
     }
 
     saxonAttack = () => {
         let viking = this.vikingArmy[Math.floor(Math.random() * this.vikingArmy.length)]
         let saxon = this.saxonArmy[Math.floor(Math.random() * this.saxonArmy.length)]
 
-        let dmg = this.viking.health - saxon.strength
+        let msg = viking.receiveDamage(saxon.attack())
 
-        if (this.viking.health < 1) {
+        if (viking.health < 1) {
             this.vikingArmy.splice(this.vikingArmy.indexOf(viking), 1)
         }
-        return dmg
+        return msg
     }
 
     showStatus = () => {
-        if (this.saxonArmy.length > 0 && this.vikingArmy.length > 1) { return `Vikings and Saxons are still in the thick of battle.` }
+        if (this.saxonArmy.length > 0 && this.vikingArmy.length > 0) { return `Vikings and Saxons are still in the thick of battle.` }
         if (this.vikingArmy.length < 1) { return `Saxons have fought for their lives and survived another day...` };
         if (this.saxonArmy.length < 1) { return `Vikings have won the war of the century!` };
     }
 
 }
-
-
-// - should make a `Saxon` `receiveDamage()` equal to the `strength` of a `Viking`
-// - should remove dead saxons from the army
-// - should return **result of calling `receiveDamage()` of a `Saxon`** with the `strength` of a `Viking`
